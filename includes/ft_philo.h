@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/09 19:11:04 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/09 20:09:27 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/09 20:27:21 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct			s_table
 {
 	t_philo				*philo;
 	t_bread				*bread;
+	int					active;
 	pthread_mutex_t		mutex;
 }						t_table;
 

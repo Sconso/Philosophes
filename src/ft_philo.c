@@ -6,13 +6,14 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/09 17:27:39 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/09 20:19:52 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/09 20:47:23 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_philo.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void			print_table(t_table *table)
 {
@@ -45,6 +46,7 @@ t_table			*create_table(void)
 	while (++i < 7)
 	{
 		philo[i].life = LIFE;
+		philo[i].life += i;
 		philo[i].status = IDLE;
 		bread[i].quantity = QUANTITY;
 	}
@@ -53,11 +55,44 @@ t_table			*create_table(void)
 	return (table);
 }
 
-int			main(void)
+void			*test(void *arg)
 {
 	t_table		*table;
 
+	table = (t_table *)arg;
+	pthread_mutex_lock(&(table->mutex));
+	printf("Philo %d created !\n", table->active);
+	pthread_mutex_unlock(&(table->mutex));
+	return (NULL);
+}
+
+int			main(void)
+{
+	t_table		*table;
+	int			i;
+	int			err;
+
 	table = create_table();
 	print_table(table);
+	i = -1;
+	if (pthread_mutex_init(&(table->mutex), NULL))
+	{
+		printf("Ton père le MUTEX\n");
+		return (1);
+	}
+	while (++i < 7)
+	{
+		table->active = i;
+		err = pthread_create(&(table->philo[i].philo), NULL, &test, table);
+		if (err)
+		{
+			printf("Nique ton thread fils de mutex !\n");
+			exit(0);
+		}
+	}
+	i = -1;
+	while (++i < 7)
+		pthread_join(table->philo[i].philo, NULL);
+	pthread_mutex_destroy(&(table->mutex));
 	return (0);
 }
