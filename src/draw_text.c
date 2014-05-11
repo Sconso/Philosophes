@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/11 21:56:55 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/11 22:20:01 by sconso           ###   ########.fr       */
+/*   Created: 2014/05/11 22:39:10 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/11 22:39:11 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void			draw_text(t_mdata *md)
 			str = "dead...";
 		mlx_string_put(md->mptr, md->wptr, 128, height, philo, str);
 	}
+	mlx_string_put(md->mptr, md->wptr, md->w - 130, md->h - 10, 0x000000,
+					"By Sconso & Ffondane");
 }
 
 void			draw_life(t_mdata *mdata)
