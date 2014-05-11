@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/09 17:27:39 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/11 22:17:15 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/11 23:11:48 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void				*lifetime(void *arg)
 			if (table->philo[i].status != EATING)
 			{
 				table->philo[i].life -= 1;
-				if (table->philo[i].life <= 0 && (table->active = 0))
+				if (table->philo[i].life <= 0 && !(table->active = 0))
 					table->philo[i].status = DEAD;
 			}
 			pthread_mutex_unlock(&g_mutex);
