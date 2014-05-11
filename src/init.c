@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Myrkskog <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/11 20:15:56 by Myrkskog          #+#    #+#             */
-/*   Updated: 2014/05/11 20:28:33 by Myrkskog         ###   ########.fr       */
+/*   Created: 2014/05/11 22:08:20 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/11 22:08:38 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static t_mdata		*init_mlx(void)
 	return (mdata);
 }
 
-void			reset_philos(t_table *table)
+void				reset_philos(t_table *table)
 {
-	int			i;
+	int				i;
 
 	i = -1;
 	while (++i < 7)

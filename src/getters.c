@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Myrkskog <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/11 20:13:09 by Myrkskog          #+#    #+#             */
-/*   Updated: 2014/05/11 20:14:19 by Myrkskog         ###   ########.fr       */
+/*   Created: 2014/05/11 22:07:55 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/11 22:08:10 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_table					*get_table(char dofree)
 	return (table);
 }
 
-int				get_philo(int nb)
+int						get_philo(int nb)
 {
-	t_table		*table;
-	t_philo		philo;
+	t_table				*table;
+	t_philo				philo;
 
 	table = get_table(0);
 	philo = table->philo[nb];
@@ -45,9 +45,9 @@ int				get_philo(int nb)
 	return (0x000000);
 }
 
-int				get_bread(int nb)
+int						get_bread(int nb)
 {
-	t_table		*table;
+	t_table				*table;
 
 	table = get_table(0);
 	if (table->bread[nb])

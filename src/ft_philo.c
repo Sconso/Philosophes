@@ -6,7 +6,7 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/09 17:27:39 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/11 20:39:00 by Myrkskog         ###   ########.fr       */
+/*   Updated: 2014/05/11 22:17:15 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 pthread_mutex_t		g_mutex;
 
-int			istimeout(t_table *table, unsigned int timeout)
+int					istimeout(t_table *table, unsigned int timeout)
 {
 	if (time(NULL) >= timeout)
 	{
@@ -25,7 +25,7 @@ int			istimeout(t_table *table, unsigned int timeout)
 	return (0);
 }
 
-void			*lifetime(void *arg)
+void				*lifetime(void *arg)
 {
 	t_table			*table;
 	int				i;
@@ -43,11 +43,8 @@ void			*lifetime(void *arg)
 			if (table->philo[i].status != EATING)
 			{
 				table->philo[i].life -= 1;
-				if (table->philo[i].life <= 0)
-				{
+				if (table->philo[i].life <= 0 && (table->active = 0))
 					table->philo[i].status = DEAD;
-					table->active = 0;
-				}
 			}
 			pthread_mutex_unlock(&g_mutex);
 		}
@@ -57,29 +54,27 @@ void			*lifetime(void *arg)
 	return (NULL);
 }
 
-
-int			main(void)
+int					main(void)
 {
-	t_table		*table;
-	int			i;
-	int			err;
+	t_table			*table;
+	int				i;
+	int				err;
 
 	table = get_table(0);
 	i = -1;
 	if (pthread_mutex_init(&g_mutex, NULL))
 		ft_exit("Impossible d'initialiser le mutex");
-	err = pthread_create(&(table->mlx), NULL, &init, NULL);
-	if (err)
-		ft_exit("Impossible de créer le thread MLX.\n");
+	if ((err = pthread_create(&(table->mlx), NULL, &init, NULL)))
+		ft_exit("Impossible de creer le thread MLX.\n");
 	while (++i < 7)
 	{
-		err = pthread_create(&(table->philo[i].philo), NULL, &sheduler, &(table->philo[i]));
+		err = pthread_create(&(table->philo[i].philo), NULL,
+							&sheduler, &(table->philo[i]));
 		if (err)
-			ft_exit("Impossible de créer le thread Philosophe.\n");
+			ft_exit("Impossible de creer le thread Philosophe.\n");
 	}
-	err = pthread_create(&(table->time), NULL, &lifetime, table);
-	if (err)
-		ft_exit("Impossible de créer le thread Lifetime.\n");
+	if ((err = pthread_create(&(table->time), NULL, &lifetime, table)))
+		ft_exit("Impossible de creer le thread Lifetime.\n");
 	i = -1;
 	while (++i < 7)
 		pthread_join(table->philo[i].philo, NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Myrkskog <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/11 20:21:07 by Myrkskog          #+#    #+#             */
-/*   Updated: 2014/05/11 20:28:18 by Myrkskog         ###   ########.fr       */
+/*   Created: 2014/05/11 22:08:24 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/11 22:20:24 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,8 @@ int							loop(t_mdata *mdata)
 
 int							keyhook(int keycode, t_mdata *mdata)
 {
-	t_table					*table;
-
 	if (keycode == ESC)
 	{
-		table = get_table(0);
 		if (mdata->iptr)
 			mlx_destroy_image(mdata->mptr, mdata->iptr);
 		mlx_destroy_window(mdata->mptr, mdata->wptr);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/04/27 19:36:40 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/11 15:57:43 by Myrkskog         ###   ########.fr       */
+/*   Created: 2014/05/11 21:56:22 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/11 21:56:39 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void			draw_circle(t_mdata *mdata, int ray, t_vertex center, int color)
 	m = 5 - 4 * ray;
 	while (x <= y)
 	{
-	 	fill_image(mdata, x + center.x, y + center.y, color);
+		fill_image(mdata, x + center.x, y + center.y, color);
 		fill_image(mdata, y + center.x, x + center.y, color);
 		fill_image(mdata, -x + center.x, y + center.y, color);
 		fill_image(mdata, -y + center.x, x + center.y, color);

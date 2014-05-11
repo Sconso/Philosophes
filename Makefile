@@ -6,19 +6,20 @@
 #    By: sconso <sconso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/12 18:13:08 by sconso            #+#    #+#              #
-#    Updated: 2014/05/11 20:38:57 by Myrkskog         ###   ########.fr        #
+#    Updated: 2014/05/11 22:21:25 by sconso           ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = philo
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 DFLAGS = -pedantic -g -ggdb
 INC = -I includes/ -I libft/includes/ -I /usr/X11/include
-LFLAGS = -lpthread -Llibft/ -lft -L/usr/lib -lmlx -L/usr/X11/lib -lXext -lX11
+LFLAGS = -lpthread -L/usr/lib -lmlx -L/usr/X11/lib -lXext -lX11
 
-FILES = ft_philo.c draw.c draw_scene.c draw_text.c draw_utilities.c ft_errors.c ft_itoa.c getters.c hooks.c init.c states.c
+FILES = ft_philo.c draw.c draw_scene.c draw_text.c draw_utilities.c \
+		ft_errors.c ft_itoa.c getters.c hooks.c init.c states.c
 
 SRCDIR = src
 OBJDIR = obj
@@ -28,8 +29,7 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRC:.c=.o))
 
 all : $(NAME)
 
-$(NAME) : libft $(OBJDIR) $(OBJ)
-		@make -C libft/ all
+$(NAME) : $(OBJDIR) $(OBJ)
 		@$(CC) $(CFLAGS) $(INC) -o $@ $(OBJ) $(LFLAGS)
 		@echo "\033[4;32m$@\033[0m created !"
 
@@ -58,20 +58,9 @@ fclean : clean
 		@/bin/rm -f $(NAME)
 		@echo "\033[1;30m$(NAME)\033[0m removed !"
 
-libft :
-		@make -C libft all
-
-libfclean :
-		@make -C libft fclean
-
-libre :
-		@make -C libft re
-		@make re
-
 re : fclean all
 
 debug : CFLAGS += $(DFLAGS)
 debug : re
 
-.SILENT :
 .PHONY : all clean fclean re

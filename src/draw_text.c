@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_text.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Myrkskog <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/05/11 20:03:11 by Myrkskog          #+#    #+#             */
-/*   Updated: 2014/05/11 20:09:56 by Myrkskog         ###   ########.fr       */
+/*   Created: 2014/05/11 21:56:55 by sconso            #+#    #+#             */
+/*   Updated: 2014/05/11 22:20:01 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ void			draw_life(t_mdata *mdata)
 
 void			draw_bread(t_mdata *mdata)
 {
-	t_table		*table;
-
-	table = get_table(0);
 	draw_line(to_vertex(310, 210, 0, get_bread(0)),
 				to_vertex(360, 260, 0, get_bread(0)),
 				mdata);

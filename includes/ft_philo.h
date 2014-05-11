@@ -6,14 +6,14 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/09 19:11:04 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/11 20:38:44 by Myrkskog         ###   ########.fr       */
+/*   Updated: 2014/05/11 22:23:25 by sconso           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PHILO_H
 # define FT_PHILO_H
 
-# include <pthread.h>
+# include <structs.h>
 
 # define IDLE (1)
 # define THINKING (2)
@@ -23,60 +23,12 @@
 # define EAT_T (2)
 # define REST_T (2)
 # define THINK_T (2)
-# define TIMEOUT (60)
+# define TIMEOUT (10)
 
-# define WIDTH (900)
+# define WIDTH (800)
 # define HEIGHT (800)
 
 # define ESC (65307)
-
-typedef struct			s_philo
-{
-	pthread_t			philo;
-	int					life;
-	char				status;
-	char				nb;
-}						t_philo;
-
-typedef struct			s_table
-{
-	t_philo				*philo;
-	char				*bread;
-	pthread_t			time;
-	pthread_t			mlx;
-	int					active;
-	pthread_mutex_t		mutex;
-}						t_table;
-
-typedef struct			s_mdata
-{
-	void				*mptr;
-	void				*wptr;
-	void				*iptr;
-	char				*idata;
-	int					w;
-	int					h;
-	int					bpp;
-	int					sizeline;
-	int					endian;
-}						t_mdata;
-
-typedef struct			s_vertex
-{
-	float				x;
-	float				y;
-	float				z;
-	float				w;
-	unsigned int		color;
-}						t_vertex;
-
-typedef struct			s_delta
-{
-	float				x1;
-	float				x2;
-	float				y1;
-	float				y2;
-}						t_delta;
 
 /*
 ** draw.c
