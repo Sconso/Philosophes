@@ -6,65 +6,57 @@
 /*   By: sconso <sconso@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/05/09 17:27:39 by sconso            #+#    #+#             */
-/*   Updated: 2014/05/09 20:47:23 by sconso           ###   ########.fr       */
+/*   Updated: 2014/05/11 20:39:00 by Myrkskog         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_philo.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 
-void			print_table(t_table *table)
-{
-	int			i;
+pthread_mutex_t		g_mutex;
 
-	i = -1;
-	while (++i < 7)
+int			istimeout(t_table *table, unsigned int timeout)
+{
+	if (time(NULL) >= timeout)
 	{
-		printf("Philo n*%d : \n", i);
-		printf("Status = %d\n", table->philo[i].status);
-		printf("Life = %d\n", table->philo[i].life);
-		printf("Bread = %d\n\n", table->bread[i].quantity);
+		table->active = 2;
+		return (1);
 	}
+	return (0);
 }
 
-t_table			*create_table(void)
+void			*lifetime(void *arg)
 {
-	t_table		*table;
-	t_philo		*philo;
-	t_bread		*bread;
-	int			i;
+	t_table			*table;
+	int				i;
+	unsigned int	timeout;
 
-	if (!(table = (t_table *)malloc(sizeof(*table))))
-		exit(0);
-	if (!(philo = (t_philo *)malloc(sizeof(*philo) * 7)))
-		exit(0);
-	if (!(bread = (t_bread *)malloc(sizeof(*bread) * 7)))
-		exit(0);
-	i = -1;
-	while (++i < 7)
-	{
-		philo[i].life = LIFE;
-		philo[i].life += i;
-		philo[i].status = IDLE;
-		bread[i].quantity = QUANTITY;
-	}
-	table->philo = philo;
-	table->bread = bread;
-	return (table);
-}
-
-void			*test(void *arg)
-{
-	t_table		*table;
-
+	timeout = time(NULL) + TIMEOUT;
 	table = (t_table *)arg;
-	pthread_mutex_lock(&(table->mutex));
-	printf("Philo %d created !\n", table->active);
-	pthread_mutex_unlock(&(table->mutex));
+	while (table->active == 1)
+	{
+		usleep(1000000);
+		i = -1;
+		while (table->active == 1 && ++i < 7)
+		{
+			pthread_mutex_lock(&g_mutex);
+			if (table->philo[i].status != EATING)
+			{
+				table->philo[i].life -= 1;
+				if (table->philo[i].life <= 0)
+				{
+					table->philo[i].status = DEAD;
+					table->active = 0;
+				}
+			}
+			pthread_mutex_unlock(&g_mutex);
+		}
+		if (istimeout(table, timeout))
+			return (NULL);
+	}
 	return (NULL);
 }
+
 
 int			main(void)
 {
@@ -72,27 +64,26 @@ int			main(void)
 	int			i;
 	int			err;
 
-	table = create_table();
-	print_table(table);
+	table = get_table(0);
 	i = -1;
-	if (pthread_mutex_init(&(table->mutex), NULL))
-	{
-		printf("Ton père le MUTEX\n");
-		return (1);
-	}
+	if (pthread_mutex_init(&g_mutex, NULL))
+		ft_exit("Impossible d'initialiser le mutex");
+	err = pthread_create(&(table->mlx), NULL, &init, NULL);
+	if (err)
+		ft_exit("Impossible de créer le thread MLX.\n");
 	while (++i < 7)
 	{
-		table->active = i;
-		err = pthread_create(&(table->philo[i].philo), NULL, &test, table);
+		err = pthread_create(&(table->philo[i].philo), NULL, &sheduler, &(table->philo[i]));
 		if (err)
-		{
-			printf("Nique ton thread fils de mutex !\n");
-			exit(0);
-		}
+			ft_exit("Impossible de créer le thread Philosophe.\n");
 	}
+	err = pthread_create(&(table->time), NULL, &lifetime, table);
+	if (err)
+		ft_exit("Impossible de créer le thread Lifetime.\n");
 	i = -1;
 	while (++i < 7)
 		pthread_join(table->philo[i].philo, NULL);
-	pthread_mutex_destroy(&(table->mutex));
+	pthread_join(table->mlx, NULL);
+	pthread_mutex_destroy(&g_mutex);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: sconso <sconso@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/12 18:13:08 by sconso            #+#    #+#              #
-#    Updated: 2014/05/09 19:09:52 by sconso           ###   ########.fr        #
+#    Updated: 2014/05/11 20:38:57 by Myrkskog         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,11 +14,11 @@ NAME = philo
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-DFLAGS = -pedantic -ansi -g -ggdb
-INC = -I includes/ -I libft/includes/
-LFLAGS = -L libft/ -lft -pthread
+DFLAGS = -pedantic -g -ggdb
+INC = -I includes/ -I libft/includes/ -I /usr/X11/include
+LFLAGS = -lpthread -Llibft/ -lft -L/usr/lib -lmlx -L/usr/X11/lib -lXext -lX11
 
-FILES = ft_philo.c
+FILES = ft_philo.c draw.c draw_scene.c draw_text.c draw_utilities.c ft_errors.c ft_itoa.c getters.c hooks.c init.c states.c
 
 SRCDIR = src
 OBJDIR = obj
